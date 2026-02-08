@@ -1,55 +1,171 @@
-import google.generativeai as genai
-import gradio as gr
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AYA-TECH NEURAL INTERFACE</title>
+    <style>
+        /* 1. Animated Deep Tech Background */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(-45deg, #020617, #1e1b4b, #581c87, #0f172a);
+            background-size: 400% 400%;
+            animation: gradientMove 15s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+        }
 
-# 1. Configuration (Direct Gemini Power)
-API_KEY = "AIzaSyC5Ifzfmp-tZZ8E6So-CpaSK1vPzcC6Mjc"
-genai.configure(api_key=API_KEY)
-# Initialize the model without restrictive instructions
-model = genai.GenerativeModel('gemini-1.5-flash') 
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
 
-# 2. Smart Logic (No more random answers)
-def chatbot_response(message, history):
-    if not message: return "I'm listening..."
-    try:
-        # Direct call to Gemini for a real conversation
-        chat = model.start_chat(history=[])
-        response = chat.send_message(message)
-        return response.text
-    except Exception as e:
-        return f"⚠️ Connection Error: {str(e)}"
+        /* 2. Chat Container Design */
+        .chat-container {
+            width: 90%;
+            max-width: 500px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            height: 80vh;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        }
 
-# 3. High-End Futuristic CSS
-custom_css = """
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+        .header {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(0, 242, 255, 0.2);
+        }
 
-/* Animated Dark Background */
-.gradio-container {
-    background: linear-gradient(-45deg, #0f172a, #1e1b4b, #581c87, #020617);
-    background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
-    font-family: 'Orbitron', sans-serif !important;
-}
+        .header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #00f2ff;
+            text-shadow: 0 0 10px #00f2ff;
+        }
 
-@keyframes gradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
+        #chat-box {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
 
-.main-title h1 { color: #00f2ff !important; text-shadow: 0 0 10px #00f2ff; }
-.chatbot .user { background-color: #1e293b !important; border: 1px solid #38bdf8 !important; }
-.chatbot .bot { background-color: #0f172a !important; border: 1px solid #c026d3 !important; }
-"""
+        .message {
+            padding: 10px 15px;
+            border-radius: 15px;
+            max-width: 80%;
+            line-height: 1.4;
+        }
 
-# 4. Building the UI
-with gr.Blocks(css=custom_css) as demo:
-    gr.HTML("<div class='main-title'><h1> ⚡ AYA-TECH NEURAL INTERFACE </h1></div>")
-    
-    chat_ui = gr.ChatInterface(
-        fn=chatbot_response,
-        description="Experience the full power of Gemini 1.5 Flash with Animated UI.",
-        examples=["Explain Quantum Physics like I'm five", "Write a Python script for a neural network"],
-    )
+        .user-msg {
+            align-self: flex-end;
+            background: #1e293b;
+            border: 1px solid #38bdf8;
+        }
 
-if __name__ == "__main__":
-    demo.launch(share=True, debug=True)
+        .bot-msg {
+            align-self: flex-start;
+            background: #0f172a;
+            border: 1px solid #c026d3;
+        }
+
+        .input-area {
+            padding: 20px;
+            display: flex;
+            gap: 10px;
+            border-top: 1px solid rgba(0, 242, 255, 0.2);
+        }
+
+        input {
+            flex: 1;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid #334155;
+            padding: 12px;
+            border-radius: 10px;
+            color: white;
+            outline: none;
+        }
+
+        button {
+            background: #00f2ff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            color: #020617;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #008fb3;
+            box-shadow: 0 0 15px #00f2ff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="chat-container">
+        <div class="header">
+            <h1>🌐 AYA NEURAL AI</h1>
+        </div>
+        <div id="chat-box">
+            <div class="message bot-msg">Hello! I am Aya AI. How can I assist you with Gemini 1.5 today?</div>
+        </div>
+        <div class="input-area">
+            <input type="text" id="user-input" placeholder="Ask me anything...">
+            <button onclick="sendMessage()">SEND</button>
+        </div>
+    </div>
+
+    <script>
+        async function sendMessage() {
+            const inputField = document.getElementById('user-input');
+            const chatBox = document.getElementById('chat-box');
+            const message = inputField.value.trim();
+
+            if (!message) return;
+
+            // Display User Message
+            chatBox.innerHTML += `<div class="message user-msg">${message}</div>`;
+            inputField.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // Call Gemini API
+            const API_KEY = "AIzaSyC5Ifzfmp-tZZ8E6So-CpaSK1vPzcC6Mjc";
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: message }] }]
+                    })
+                });
+
+                const data = await response.json();
+                const botReply = data.candidates[0].content.parts[0].text;
+
+                // Display Bot Response
+                chatBox.innerHTML += `<div class="message bot-msg">${botReply}</div>`;
+            } catch (error) {
+                chatBox.innerHTML += `<div class="message bot-msg" style="color: red;">Error: Could not connect to API.</div>`;
+            }
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    </script>
+</body>
+</html>
