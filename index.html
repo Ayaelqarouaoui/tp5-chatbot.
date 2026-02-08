@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AYA NEURAL AI - SPACE EDITION</title>
     <style>
-        /* 1. Space Background Animation */
+        /* 1. Space Background with Deep Space Effect */
         body {
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: radial-gradient(circle at bottom, #000205 0%, #000000 100%);
+            background: radial-gradient(circle at center, #001d3d 0%, #000814 100%);
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -19,45 +19,70 @@
             position: relative;
         }
 
-        /* Animated Stars Layer */
-        body::before {
-            content: "";
+        /* Animated Stars Background */
+        .stars-container {
             position: absolute;
-            width: 200%;
-            height: 200%;
-            background-image: 
-                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
-                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
-                radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px);
-            background-size: 550px 550px, 350px 350px, 250px 250px;
-            animation: moveStars 60s linear infinite;
-            opacity: 0.5;
+            width: 100%;
+            height: 100%;
             z-index: 0;
         }
 
-        @keyframes moveStars {
-            from { transform: translateY(0); }
-            to { transform: translateY(-1000px); }
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: twinkle var(--duration) infinite ease-in-out;
         }
 
-        /* 2. Chat Container - Glassmorphism Neon */
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* 2. Floating Moon (L-Qamar) */
+        .moon {
+            position: absolute;
+            top: 50px;
+            right: 50px;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle at 30% 30%, #f0f0f0, #adb5bd);
+            border-radius: 50%;
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.2), inset -10px -10px 20px rgba(0,0,0,0.2);
+            z-index: 1;
+            animation: floatMoon 6s ease-in-out infinite;
+        }
+
+        .moon-crater {
+            position: absolute;
+            background: rgba(0,0,0,0.1);
+            border-radius: 50%;
+        }
+
+        @keyframes floatMoon {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        /* 3. Chat Container - Glassmorphism */
         .chat-container {
             width: 95%;
             max-width: 450px;
-            height: 85vh;
-            background: rgba(10, 10, 20, 0.8);
+            height: 80vh;
+            background: rgba(10, 10, 20, 0.7);
             border: 1px solid rgba(0, 255, 255, 0.2);
             border-radius: 24px;
-            backdrop-filter: blur(15px);
+            backdrop-filter: blur(20px);
             display: flex;
             flex-direction: column;
             position: relative;
             z-index: 10;
-            box-shadow: 0 0 50px rgba(0, 212, 255, 0.1);
+            box-shadow: 0 0 50px rgba(0, 212, 255, 0.15);
         }
 
         .header {
-            padding: 25px;
+            padding: 20px;
             text-align: center;
             border-bottom: 1px solid rgba(0, 255, 255, 0.1);
         }
@@ -69,10 +94,9 @@
             background: linear-gradient(to right, #00f2ff, #7000ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
+            text-shadow: 0 0 15px rgba(0, 242, 255, 0.4);
         }
 
-        /* 3. Message Area */
         #chat-box {
             flex: 1;
             padding: 20px;
@@ -80,21 +104,22 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
-            scrollbar-width: none;
+            scrollbar-width: thin;
+            scrollbar-color: #7000ff transparent;
         }
 
         .message {
             padding: 12px 18px;
             border-radius: 18px;
-            max-width: 85%;
+            max-width: 80%;
             font-size: 0.95rem;
             line-height: 1.5;
-            animation: slideIn 0.4s ease-out;
+            animation: slideIn 0.3s ease-out forwards;
         }
 
         @keyframes slideIn {
-            from { opacity: 0; transform: scale(0.9) translateY(10px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .user-msg {
@@ -106,17 +131,17 @@
 
         .bot-msg {
             align-self: flex-start;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(112, 0, 255, 0.3);
             color: #f0f0ff;
         }
 
-        /* 4. Input Area - Cyberpunk Style */
+        /* 4. Input Controls */
         .input-area {
             padding: 20px;
             display: flex;
             gap: 10px;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.4);
             border-bottom-left-radius: 24px;
             border-bottom-right-radius: 24px;
         }
@@ -124,64 +149,74 @@
         input {
             flex: 1;
             background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 12px;
             border-radius: 12px;
             color: white;
             outline: none;
-            transition: 0.3s;
-        }
-
-        input:focus {
-            border-color: #00f2ff;
-            box-shadow: 0 0 10px rgba(0, 242, 255, 0.2);
         }
 
         button {
             background: linear-gradient(45deg, #00f2ff, #7000ff);
             border: none;
-            padding: 0 25px;
+            padding: 0 20px;
             border-radius: 12px;
             color: white;
             font-weight: bold;
             cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: 0.3s;
         }
-
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 242, 255, 0.4);
-        }
-
-        button:disabled { opacity: 0.5; cursor: not-allowed; }
 
         .error-msg {
-            background: rgba(255, 0, 0, 0.1);
+            background: rgba(255, 0, 0, 0.2);
             color: #ff4d4d;
             border: 1px solid #ff4d4d;
+            padding: 10px;
+            border-radius: 10px;
             font-size: 0.8rem;
-            align-self: center;
         }
     </style>
 </head>
 <body>
+
+    <div class="stars-container" id="stars"></div>
+    
+    <div class="moon">
+        <div class="moon-crater" style="top:20%; left:30%; width:15px; height:15px;"></div>
+        <div class="moon-crater" style="top:50%; left:60%; width:20px; height:20px;"></div>
+        <div class="moon-crater" style="top:70%; left:20%; width:10px; height:10px;"></div>
+    </div>
 
     <div class="chat-container">
         <div class="header">
             <h1>AYA NEURAL AI</h1>
         </div>
         <div id="chat-box">
-            <div class="message bot-msg">System Online. Welcome to the Neural Interface. How can I help you today?</div>
+            <div class="message bot-msg">System Online. Welcome to the Deep Space Interface.</div>
         </div>
         <div class="input-area">
-            <input type="text" id="user-input" placeholder="Transmit message..." onkeypress="if(event.key === 'Enter') sendMessage()">
+            <input type="text" id="user-input" placeholder="Transmit to space..." onkeypress="if(event.key === 'Enter') sendMessage()">
             <button id="send-btn" onclick="sendMessage()">SEND</button>
         </div>
     </div>
 
     <script>
+        // Create Stars Dynamically
+        function createStars() {
+            const container = document.getElementById('stars');
+            for (let i = 0; i < 150; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                const size = Math.random() * 3 + 'px';
+                star.style.width = size;
+                star.style.height = size;
+                star.style.top = Math.random() * 100 + '%';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.setProperty('--duration', Math.random() * 3 + 2 + 's');
+                container.appendChild(star);
+            }
+        }
+        createStars();
+
         async function sendMessage() {
             const inputField = document.getElementById('user-input');
             const chatBox = document.getElementById('chat-box');
@@ -194,12 +229,12 @@
             inputField.value = '';
 
             const loadingId = "loading-" + Date.now();
-            chatBox.innerHTML += `<div class="message bot-msg" id="${loadingId}">Analyzing...</div>`;
+            chatBox.innerHTML += `<div class="message bot-msg" id="${loadingId}">Receiving transmission...</div>`;
             chatBox.scrollTop = chatBox.scrollHeight;
 
-            // ⚠️ DIR L-API KEY JDIDA DYALK HNA:
-            const API_KEY = "AIzaSyCwqH9xq8eG_BKM-RrynC1fqv7Vn-sbMJ8"; 
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+            // --- T-SLA7 HNA: v1 blast v1beta ---
+            const API_KEY = "DI_API_KEY_HNA"; 
+            const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
             sendBtn.disabled = true;
 
@@ -218,13 +253,13 @@
                 if (data.candidates && data.candidates[0].content) {
                     loadingElement.innerText = data.candidates[0].content.parts[0].text;
                 } else {
-                    throw new Error("Empty response from the neural network.");
+                    throw new Error("Empty response.");
                 }
 
             } catch (error) {
                 const loadingElement = document.getElementById(loadingId);
                 if (loadingElement) loadingElement.remove();
-                chatBox.innerHTML += `<div class="message error-msg">Transmission Failed: ${error.message}</div>`;
+                chatBox.innerHTML += `<div class="message error-msg">Error: ${error.message}</div>`;
             } finally {
                 sendBtn.disabled = false;
                 chatBox.scrollTop = chatBox.scrollHeight;
@@ -233,4 +268,3 @@
     </script>
 </body>
 </html>
-
