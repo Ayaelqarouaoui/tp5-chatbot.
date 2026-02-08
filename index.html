@@ -3,56 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AYA-TECH NEURAL INTERFACE</title>
+    <title>AYA NEURAL AI - SPACE EDITION</title>
     <style>
-        /* 1. Animated Deep Tech Background */
+        /* 1. Space Background Animation */
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: linear-gradient(-45deg, #020617, #1e1b4b, #581c87, #0f172a);
-            background-size: 400% 400%;
-            animation: gradientMove 15s ease infinite;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle at bottom, #000205 0%, #000000 100%);
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            color: white;
+            overflow: hidden;
+            position: relative;
         }
 
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* Animated Stars Layer */
+        body::before {
+            content: "";
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+                radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px);
+            background-size: 550px 550px, 350px 350px, 250px 250px;
+            animation: moveStars 60s linear infinite;
+            opacity: 0.5;
+            z-index: 0;
         }
 
-        /* 2. Chat Container Design */
+        @keyframes moveStars {
+            from { transform: translateY(0); }
+            to { transform: translateY(-1000px); }
+        }
+
+        /* 2. Chat Container - Glassmorphism Neon */
         .chat-container {
-            width: 90%;
-            max-width: 500px;
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(0, 242, 255, 0.3);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
+            width: 95%;
+            max-width: 450px;
+            height: 85vh;
+            background: rgba(10, 10, 20, 0.8);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 24px;
+            backdrop-filter: blur(15px);
             display: flex;
             flex-direction: column;
-            height: 80vh;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 0 50px rgba(0, 212, 255, 0.1);
         }
 
         .header {
-            padding: 20px;
+            padding: 25px;
             text-align: center;
-            border-bottom: 1px solid rgba(0, 242, 255, 0.2);
+            border-bottom: 1px solid rgba(0, 255, 255, 0.1);
         }
 
         .header h1 {
             margin: 0;
-            font-size: 1.5rem;
-            color: #00f2ff;
-            text-shadow: 0 0 10px #00f2ff;
+            font-size: 1.4rem;
+            letter-spacing: 3px;
+            background: linear-gradient(to right, #00f2ff, #7000ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
         }
 
+        /* 3. Message Area */
         #chat-box {
             flex: 1;
             padding: 20px;
@@ -60,58 +80,89 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
+            scrollbar-width: none;
         }
 
         .message {
-            padding: 10px 15px;
-            border-radius: 15px;
-            max-width: 80%;
-            line-height: 1.4;
+            padding: 12px 18px;
+            border-radius: 18px;
+            max-width: 85%;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            animation: slideIn 0.4s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: scale(0.9) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
         .user-msg {
             align-self: flex-end;
-            background: #1e293b;
-            border: 1px solid #38bdf8;
+            background: linear-gradient(135deg, #004e92, #000428);
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            color: #e0faff;
         }
 
         .bot-msg {
             align-self: flex-start;
-            background: #0f172a;
-            border: 1px solid #c026d3;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(112, 0, 255, 0.3);
+            color: #f0f0ff;
         }
 
+        /* 4. Input Area - Cyberpunk Style */
         .input-area {
             padding: 20px;
             display: flex;
             gap: 10px;
-            border-top: 1px solid rgba(0, 242, 255, 0.2);
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom-left-radius: 24px;
+            border-bottom-right-radius: 24px;
         }
 
         input {
             flex: 1;
-            background: rgba(30, 41, 59, 0.5);
-            border: 1px solid #334155;
-            padding: 12px;
-            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 14px;
+            border-radius: 12px;
             color: white;
             outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: #00f2ff;
+            box-shadow: 0 0 10px rgba(0, 242, 255, 0.2);
         }
 
         button {
-            background: #00f2ff;
+            background: linear-gradient(45deg, #00f2ff, #7000ff);
             border: none;
-            padding: 10px 20px;
-            border-radius: 10px;
-            color: #020617;
+            padding: 0 25px;
+            border-radius: 12px;
+            color: white;
             font-weight: bold;
             cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             transition: 0.3s;
         }
 
         button:hover {
-            background: #008fb3;
-            box-shadow: 0 0 15px #00f2ff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 242, 255, 0.4);
+        }
+
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .error-msg {
+            background: rgba(255, 0, 0, 0.1);
+            color: #ff4d4d;
+            border: 1px solid #ff4d4d;
+            font-size: 0.8rem;
+            align-self: center;
         }
     </style>
 </head>
@@ -119,14 +170,14 @@
 
     <div class="chat-container">
         <div class="header">
-            <h1>🌐 AYA NEURAL AI</h1>
+            <h1>AYA NEURAL AI</h1>
         </div>
         <div id="chat-box">
-            <div class="message bot-msg">Hello! I am Aya AI. How can I assist you with Gemini 1.5 today?</div>
+            <div class="message bot-msg">System Online. Welcome to the Neural Interface. How can I help you today?</div>
         </div>
         <div class="input-area">
-            <input type="text" id="user-input" placeholder="Ask me anything...">
-            <button onclick="sendMessage()">SEND</button>
+            <input type="text" id="user-input" placeholder="Transmit message..." onkeypress="if(event.key === 'Enter') sendMessage()">
+            <button id="send-btn" onclick="sendMessage()">SEND</button>
         </div>
     </div>
 
@@ -134,38 +185,52 @@
         async function sendMessage() {
             const inputField = document.getElementById('user-input');
             const chatBox = document.getElementById('chat-box');
+            const sendBtn = document.getElementById('send-btn');
             const message = inputField.value.trim();
 
             if (!message) return;
 
-            // Display User Message
             chatBox.innerHTML += `<div class="message user-msg">${message}</div>`;
             inputField.value = '';
+
+            const loadingId = "loading-" + Date.now();
+            chatBox.innerHTML += `<div class="message bot-msg" id="${loadingId}">Analyzing...</div>`;
             chatBox.scrollTop = chatBox.scrollHeight;
 
-            // Call Gemini API
-            const API_KEY = "AIzaSyC5Ifzfmp-tZZ8E6So-CpaSK1vPzcC6Mjc";
+            // ⚠️ DIR L-API KEY JDIDA DYALK HNA:
+            const API_KEY = "AIzaSyCwqH9xq8eG_BKM-RrynC1fqv7Vn-sbMJ8"; 
             const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+
+            sendBtn.disabled = true;
 
             try {
                 const response = await fetch(url, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: message }] }]
-                    })
+                    body: JSON.stringify({ contents: [{ parts: [{ text: message }] }] })
                 });
 
                 const data = await response.json();
-                const botReply = data.candidates[0].content.parts[0].text;
+                const loadingElement = document.getElementById(loadingId);
 
-                // Display Bot Response
-                chatBox.innerHTML += `<div class="message bot-msg">${botReply}</div>`;
+                if (data.error) throw new Error(data.error.message);
+
+                if (data.candidates && data.candidates[0].content) {
+                    loadingElement.innerText = data.candidates[0].content.parts[0].text;
+                } else {
+                    throw new Error("Empty response from the neural network.");
+                }
+
             } catch (error) {
-                chatBox.innerHTML += `<div class="message bot-msg" style="color: red;">Error: Could not connect to API.</div>`;
+                const loadingElement = document.getElementById(loadingId);
+                if (loadingElement) loadingElement.remove();
+                chatBox.innerHTML += `<div class="message error-msg">Transmission Failed: ${error.message}</div>`;
+            } finally {
+                sendBtn.disabled = false;
+                chatBox.scrollTop = chatBox.scrollHeight;
             }
-            chatBox.scrollTop = chatBox.scrollHeight;
         }
     </script>
 </body>
 </html>
+
